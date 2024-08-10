@@ -63,7 +63,8 @@ func LoginGuest(c *gin.Context) {
 	result := conn.First(&guest, "phone_number = ?", login.PhoneNumber)
 
 	if result.Error != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Usuario não encontrado"})
+		c.Header("Create", login.PhoneNumber)
+		c.JSON(http.StatusTemporaryRedirect, gin.H{"Create": login.PhoneNumber})
 		return
 	}
 
